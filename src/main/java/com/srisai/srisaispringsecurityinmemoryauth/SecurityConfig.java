@@ -2,6 +2,7 @@ package com.srisai.srisaispringsecurityinmemoryauth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -13,17 +14,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser( "sri" )
+        auth.inMemoryAuthentication().withUser( "sree" )
                                      .password( "sai" )
                                      .roles( "USER" )
                                      .and()
-                                     .withUser( "jay" )
-                                     .password( "kar" )
+                                     .withUser( "jay1" )
+                                     .password( "kar1" )
                                      .roles( "ADMIN" );
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+//                .antMatchers( "/test/**" )
+                .antMatchers( "/admin" ).hasRole( "ADMIN" )
+                .antMatchers( "/user" ).hasAnyRole( "USER", "ADMIN" )
+                .antMatchers( "/hi" )
+                .permitAll().and().formLogin();
     }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
+
+
+
 }

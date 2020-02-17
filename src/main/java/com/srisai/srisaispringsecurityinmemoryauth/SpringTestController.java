@@ -10,8 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class SpringTestController {
 
-    @GetMapping("hi")
+    @GetMapping("/hi")
     public ResponseEntity<String> getResult() {
-        return new ResponseEntity<>("Hello Srisai", HttpStatus.OK);
+        return new ResponseEntity<>("Hello Srisai..", HttpStatus.OK);
+    }
+
+    @GetMapping("/admin")
+    public ResponseEntity<String> getAdmin() {
+        return new ResponseEntity<>("Hello Admin..", HttpStatus.OK);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<String> getUser() {
+        return new ResponseEntity<>("Hello USER..", HttpStatus.OK);
     }
 }
